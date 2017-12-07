@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>MVC Blog</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous"
+          th:href="@{/webjars/bootstrap/4.0.0-beta.2/css/bootstrap.min.css}"/>
+
+    <link rel="stylesheet" href="../public/css/styles.css" th:href="@{css/styles.css}"/>
+    <style>
+        .top-space{
+            padding-top: 3.5rem;
+        }
+    </style>
+</head>
+<body>
+<!-- NAVBAR -->
+<div th:replace="layout :: navbar-top" ></div>
+
+<!-- BODY -->
+<div th:replace="layout :: main-body" ></div>
+<div class="container top-space">
+    <div class="row">
+    <div class="col-md-9">
+<!-- TABLE of Posts -->
+<div id="posts">
+<table class="table table-dark">
+    <thead>
+    <tr>
+        <th scope="col">Post Title</th>
+        <th scope="col">Date Posted</th>
+        <th scope="col">Username</th>
+        <th scope="col">Post</th>
+    </tr>
+    </thead>
+    <tbody th:each="p : ${latest3posts}">
+    <tr>
+        <td class="title" th:text="${p.title}">Title</td>
+        <td class="date" th:text="${#dates.format(p.date, 'MMM-dd-yyyy')}">Date</td>
+        <td class="user" th:if="${p.author}" th:text="${p.author.username != null ? p.author.username : p.author.fullName}">Name</td>
+        <td class="content" th:utext="${p.body}">Post</td>
+    </tr>
+    </tbody>
+</table>
+</div>
+        <!-- SIDE POSTS -->
+    </div>
+        <div class="col-md-3 center">
+            <h3 align="center">Recent Posts</h3>
+            <ul class="recent-posts" th:each="p : ${latest5posts}" >
+
+            <a class="btn btn-primary btn-block" href="#" th:text="${p.title}"
+               th:href="@{/posts/view/{id}/(id=${p.id})}" role="button">Post Title</a>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div th:replace="layout :: footer"></div>
+
+<!-- Optional JavaScript -->
+<script src="../public/js/blog-scripts.js" th:src="@{/js/blog-scripts.js}"></script>
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"
+        th:href="@{/webjars/jquery-3.2.1.slim.min.js}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"
+        th:href="@{/webjars/popper.js/1.12.3/umd/popper.min.js}"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"
+        th:href="@{/webjars/bootstrap/4.0.0-beta.2/js/bootstrap.min.js}"></script>
+</body>
+</html>
